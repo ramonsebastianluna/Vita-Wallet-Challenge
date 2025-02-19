@@ -1,12 +1,23 @@
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const MainLayout = ({children}) => {
     const navigate = useNavigate();
+    const { setAuthState } = useAuth();
 
     const handleLogout = () => {
-        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem("client");
+        localStorage.removeItem("uid");
+    
+        setAuthState({
+            accessToken: '',
+            client: '',
+            uid: ''
+        });
+    
         navigate('/', { replace: true });
-    }
+    };
 
     return (
         <div className="container-fluid">
