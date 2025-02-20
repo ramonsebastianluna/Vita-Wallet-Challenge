@@ -9,8 +9,10 @@ export const AuthProvider = ({ children }) => {
         uid: localStorage.getItem('uid') || ''
     });
 
+    const [balances, setBalances] = useState({})
+
     return (
-        <AuthContext.Provider value={{ authState, setAuthState }}>
+        <AuthContext.Provider value={{ authState, setAuthState, balances, setBalances }}>
             {children}
         </AuthContext.Provider>
     );
