@@ -12,7 +12,7 @@ const initialState = {
 const Login = () => {
     const [data, setData] = useState(initialState);
     const navigate = useNavigate();
-    const { setAuthState } = useAuth();
+    const { setAuthState, setBalances } = useAuth();
 
     const handleInputChange = ({ target: { name, value } }) => {
         setData((prev) => ({ ...prev, [name]: value }));
@@ -47,6 +47,7 @@ const Login = () => {
 
             // Guardar en estado global
             setAuthState({ accessToken, client, uid });
+            setBalances(response.data.data.attributes.balances);
 
             // Guardar en localStorage
             localStorage.setItem('accessToken', accessToken);
