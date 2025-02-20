@@ -1,46 +1,17 @@
-import { useAuth } from "../../../context/AuthContext";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import useBalances from "../../../hooks/useBalance";
+import useTransactions from "../../../hooks/useTransactions";
 
 const Home = () => {
-    const { authState, balances } = useAuth();
-    const [ transactions, setTransactions ] = useState([]);
-
-    const getBalanceMovements = async () => {
-        try {
-            const params = new URLSearchParams();
-            params.append('access-token', authState.accessToken);
-            params.append('client', authState.client);
-            params.append('uid', authState.uid);
-
-            const response = await axios.get(
-                'https://api.qa.vitawallet.io/api/transactions',
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'app-name': 'ANGIE',
-                        'Accept': '*/*',
-                        'Cache-Control': 'no-cache',
-                    },
-                    params: params
-                }
-            );
-
-            setTransactions(response.data.data);
-
-        } catch (error) {
-            console.error('Error obteniendo el historial de movimientos:', error);
-        }
-
-    };
-    
-    useEffect(() => {
-        getBalanceMovements();
-    }, []); 
+    const { balances, loading: balancesLoading, error: balancesError } = useBalances();
+    const { transactions, loading: transactionsLoading, error: transactionsError } = useTransactions();
 
     return (
         <>
             <div>Home</div>
+
+            {balancesLoading && <p>Cargando saldos...</p>}
+            {balancesError && <p>Error al cargar saldos: {balancesError.message}</p>}
+            
             {Object.entries(balances).map(([key, value]) => (
                 <div key={key}>
                     <strong>{key.toUpperCase()}:</strong> {value}
@@ -48,6 +19,10 @@ const Home = () => {
             ))}
 
             <h2>Historial de Movimientos</h2>
+            
+            {transactionsLoading && <p>Cargando movimientos...</p>}
+            {transactionsError && <p>Error al cargar movimientos: {transactionsError.message}</p>}
+
             {transactions.map(transaction => (
                 <div key={transaction.id} className="d-flex">
                     <strong>Category:</strong> {transaction.attributes.category}
@@ -55,7 +30,7 @@ const Home = () => {
                 </div>
             ))}
         </>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

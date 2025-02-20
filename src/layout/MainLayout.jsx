@@ -3,14 +3,14 @@ import { useAuth } from "../context/AuthContext";
 
 const MainLayout = ({children}) => {
     const navigate = useNavigate();
-    const { setAuthState } = useAuth();
+    const { setCredentials } = useAuth();
 
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem("client");
         localStorage.removeItem("uid");
     
-        setAuthState({
+        setCredentials({
             accessToken: '',
             client: '',
             uid: ''

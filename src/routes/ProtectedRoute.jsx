@@ -10,8 +10,8 @@ const validateHeaders = () => {
 };
 
 const ProtectedRoute = ({ children }) => {
-    const { authState } = useAuth();
-    const isAuthInContext = authState.accessToken && authState.client && authState.uid;
+    const { credentials } = useAuth();
+    const isAuthInContext = credentials.accessToken && credentials.client && credentials.uid;
     const isAuthInLocalStorage = validateHeaders();
 
     const isAuthenticated = isAuthInContext || isAuthInLocalStorage;
