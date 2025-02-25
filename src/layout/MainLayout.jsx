@@ -57,18 +57,21 @@ const MainLayout = ({children}) => {
                             <div className="offcanvas-header">
                                 <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
-                            <div className="offcanvas-body">
+                            <div className="offcanvas-body p-0">
                                 <div className="dropdown mt-3">
-                                    <ul className="list-group">
-                                        <li className="list-group-item"><Link to="/inicio">Inicio</Link></li>
-                                        <li className="list-group-item"><Link to="/transferir">Transferir</Link></li>
-                                        <li className="list-group-item"><Link to="/recargar">Recargar</Link></li>
-                                        <li className="list-group-item"><Link to="/intercambiar">Intercambiar</Link></li>
-                                        <li className="list-group-item"><Link to="/perfil">Perfil</Link></li>
-                                        <li className="list-group-item"><Link to="/ayuda">Ayuda</Link></li>
+                                    <ul className="list-menu-mobile f-family-open-sans-regular mx-0 ps-0">
+                                        {menuItems.map(item => (
+                                            <li 
+                                                key={item.path} 
+                                                className={`list-menu-mobile__item fs-5 my-2 rounded-end-5 ${location.pathname === item.path ? "active" : ""}`}
+                                            >
+                                                <Link className="text-white" to={item.path}>{item.label}</Link>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
                             </div>
+                            <button className="btn btn-close-session f-family-open-sans-regular fs-5 text-white mx-4 p-0 position-absolute" onClick={handleLogout}>Cerrar sesión</button>
                         </div>
 
                         <button className="btn btn-close-session f-family-open-sans-regular fs-5 text-white mx-4 p-0 position-absolute" onClick={handleLogout}>Cerrar sesión</button>

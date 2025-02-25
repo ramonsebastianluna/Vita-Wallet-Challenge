@@ -21,6 +21,18 @@
     }
     .aside__mobile {
         background-color: $blue-primary !important;
+        .list-menu-mobile {
+            padding-top: 20px;
+            .list-menu-mobile__item {
+                list-style: none;
+                padding: 10px 50px 10px 20%;
+                margin-right: 20%;
+                min-width: 160px;
+            }
+        }
+        .active {
+            background-color: $blue-secondary;
+        }
     }
     .btn-close-session {
         left: 15%;
