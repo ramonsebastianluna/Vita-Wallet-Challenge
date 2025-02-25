@@ -1,0 +1,28 @@
+.dropdown-menu {
+    min-width: 60px !important;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        transition: background 0.2s ease;
+        font-size: 14px;
+
+        &:hover {
+            background-color: #f1f1f1;
+        }
+
+        img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+.btn-h-38 {
+    min-height: 38px;
+}
