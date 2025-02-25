@@ -78,7 +78,7 @@ const MainLayout = ({children}) => {
 
                     </aside>
                 </div>
-                <div className="col-12 col-sm-8 col-lg-9">
+                <div className="col-12 col-sm-8 col-lg-9 overflow-y-scroll px-4 px-md-5 vh-100 f-family-open-sans-regular">
                     {children}
                 </div>
             </div>        
