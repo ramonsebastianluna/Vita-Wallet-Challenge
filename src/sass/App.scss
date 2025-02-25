@@ -6,7 +6,11 @@
 @import './utils/media-queries';
 @import './utils/variables';
 
+//layouts
 @import './layouts/main-layout';
+
+//psages
+@import './pages/exchange';
 
 //vendors
 @import './vendors/bootstrap';
