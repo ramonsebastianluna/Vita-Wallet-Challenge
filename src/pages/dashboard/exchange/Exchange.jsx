@@ -112,11 +112,9 @@ const Exchange = () => {
                         </div>
                     </div>
 
-                    <div className="d-flex gap-3 mt-5">
-                        <button className="btn btn-outline-secondary flex-fill">Atrás</button>
-                        <button className="btn btn-info flex-fill text-white" style={{ backgroundColor: "#20c997" }}>
-                            Continuar
-                        </button>
+                    <div className="d-flex gap-3 mt-5 f-family-open-sans-semi-bold">
+                        <button className="btn btn-back">Atrás</button>
+                        <button className="btn btn-next text-white">Continuar</button>
                     </div>
                 </div>
             </div>

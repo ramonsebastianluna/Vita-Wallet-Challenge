@@ -26,3 +26,14 @@
 .btn-h-38 {
     min-height: 38px;
 }
+
+.btn-back {
+    width: 163px;
+    outline: 1px solid $blue-primary;
+    color: $blue-primary !important;
+}
+
+.btn-next {
+    width: 163px;
+    background: $blue-gradient;    
+}
