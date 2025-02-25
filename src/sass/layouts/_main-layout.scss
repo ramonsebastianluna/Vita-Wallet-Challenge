@@ -1,0 +1,11 @@
+.aside {
+    height: auto;
+    background-color: transparent;
+    @include sm-viewport {
+        background-color: $blue-primary;
+        height: 100dvh;
+    };
+    .aside__mobile {
+        background-color: $blue-primary !important;
+    }
+}
