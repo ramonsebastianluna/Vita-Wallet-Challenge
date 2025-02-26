@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import useBalances from "../../../hooks/useBalance";
 import usePrices from "../../../hooks/usePrices";
 
-
-
 const SelectExchange = ({
         setShowResume, 
         setAmountToExchange, 

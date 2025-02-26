@@ -1,22 +1,24 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
-const usePrices = () => {
+const useExchange = () => {
     const { credentials } = useAuth();
-    const [prices, setPrices] = useState({});
-    const [loading, setLoading] = useState(true);
+    const [exchange, setExchange] = useState({});
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const getPrices = async () => {
+    const makeExchange = async (data) => {
+        setLoading(true);
         try {
             const params = new URLSearchParams();
             params.append('access-token', credentials.accessToken);
             params.append('client', credentials.client);
             params.append('uid', credentials.uid);
 
-            const response = await axios.get(
-                'https://api.qa.vitawallet.io/api/users/get_crypto_multi_prices',
+            const response = await axios.post(
+                'https://api.qa.vitawallet.io/api/transactions/exchange',
+                data,
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -27,21 +29,18 @@ const usePrices = () => {
                     params: params
                 }
             );
-            setPrices(response.data.prices);
+            
+            setExchange("exito"); //hardcodeado debido al error de la api que responde null.
 
         } catch (err) {
-            console.error("Error obteniendo el historial de movimientos:", err);
-            setError(err);
+            console.error("Error al intentar hacer el intercambio:", err.response.data.message);
+            setError(err.response.data.message);
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
-        getPrices();
-    }, []);
-
-    return { prices, loading, error, getPrices };
+    return { exchange, loading, error, makeExchange };
 };
 
-export default usePrices;
+export default useExchange;
