@@ -1,3 +1,10 @@
+.exchange {
+    margin-top: 0 !important;
+    @include sm-viewport {
+        margin-top: 50px !important;
+    }
+}
+
 .dropdown-menu {
     min-width: 60px !important;
     max-height: 200px;
@@ -28,12 +35,21 @@
 }
 
 .btn-back {
-    width: 163px;
+    width: 160px;
     outline: 1px solid $blue-primary;
     color: $blue-primary !important;
 }
 
 .btn-next {
-    width: 163px;
+    width: 160px;
     background: $blue-gradient;    
+}
+
+.h-100dvh {
+    height: 100dvh;
+}
+
+.prev-next {
+    bottom: 10%;
+    width: 90%;
 }
