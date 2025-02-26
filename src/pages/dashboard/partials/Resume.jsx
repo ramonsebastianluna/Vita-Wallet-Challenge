@@ -29,20 +29,18 @@ const Resume = ({ setShowResume, amountToExchange, amountToReceive, fromCurrency
     }, [exchangeError, exchangeAttempted]);
 
     return (
-        <div className="col-12 f-family-open-sans-regular">
-            <div className="d-flex align-items-center">
-                <button className="btn p-0 m-0" onClick={() => setShowResume(false)}><img src={backArrow} alt="back-arrow" /></button>
-                <h2 className="m-0">Resumen de transacción</h2>
+        <div className="exchange col-12 col-lg-7 p-2 p-md-4 ms-0 ms-lg-5 position-relative">
+            <div className="d-flex align-items-center mb-5">
+                <button className="btn p-0 me-3" onClick={() => setShowResume(false)}><img src={backArrow} alt="back-arrow" width={30} height={30} /></button>
+                <h2 className="fs-4 fw-medium m-0 f-family-open-sans-semi-bold text-dark">Resumen de transacción</h2>
             </div>
             <div className="card border border-0 p-3">
-                <p>Monto a intercambiar {amountToExchange}</p>
-                <p>Moneda a intercambiar: {fromCurrency.name}</p>
-                <p>Moneda a recibir: {toCurrency.name}</p>
+                <p>Monto a intercambiar {amountToExchange} {fromCurrency.name}</p>
                 <p>Tasa de cambio</p>
-                <p>Total a recibir {amountToReceive}</p>
+                <p>Total a recibir {amountToReceive} {toCurrency.name}</p>
             </div>
-            <div className="d-flex gap-3 mt-5 f-family-open-sans-semi-bold">
-                <button className="btn btn-back" onClick={() => setShowResume(false)}>Atrás</button>
+            <div className="d-flex justify-content-between mt-5 f-family-open-sans-semi-bold position-absolute prev-next">
+                <button className="btn btn-back me-3" onClick={() => setShowResume(false)}>Atrás</button>
                 <button
                     className="btn btn-next text-white border border-0"
                     type="button"

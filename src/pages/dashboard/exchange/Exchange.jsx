@@ -21,7 +21,7 @@ const Exchange = () => {
 
     return (
         <div className="container">
-            <div className="row justify-content-start">
+            <div className="row justify-content-start h-100dvh">
                 {showResume ? 
                     <Resume
                         setShowResume={setShowResume}

@@ -39,7 +39,7 @@ const SelectExchange = ({
     };
 
     return (
-        <div className="col-12 col-md-6 p-4">
+        <div className="exchange col-12 col-lg-7 p-2 p-md-4 ms-0 ms-lg-5 position-relative">
             <h1 className="fs-4 fw-medium mb-4 f-family-open-sans-semi-bold text-dark">¿Qué deseas intercambiar?</h1>
 
             <div className="small text-success mb-4 f-family-open-sans-regular">Saldo disponible: {balances.usd} U$D</div>
@@ -111,8 +111,8 @@ const SelectExchange = ({
                 </div>
             </div>
 
-            <div className="d-flex gap-3 mt-5 f-family-open-sans-semi-bold">
-                <button className="btn btn-back">Atrás</button>
+            <div className="d-flex justify-content-between mt-5 f-family-open-sans-semi-bold position-absolute prev-next">
+                <button className="btn btn-back me-3">Atrás</button>
                 <button className="btn btn-next text-white border border-0" onClick={handleContinue}>Continuar</button>
             </div>
         </div>
