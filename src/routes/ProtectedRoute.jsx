@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
 
     const isAuthenticated = isAuthInContext || isAuthInLocalStorage;
 
-    return isAuthenticated ? children : <Navigate to="/" />;
+    return isAuthenticated ? children : <Navigate to="/no-autenticado" />;
 };
 
 export default ProtectedRoute;
