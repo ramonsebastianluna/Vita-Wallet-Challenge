@@ -1,82 +1,88 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import axios from "axios";
-
-const initialState = {
-    email: 'prospecto@vitawallet.io',
-    password: 'Vita.1212',
-    dev_mode: true
-};
+import useLogin from "../../hooks/useLogin";
+import amico from "../../assets/images/auth/amico.png";
+import eyeShow from "../../assets/images/auth/eye-show.png";
+import eyeHide from "../../assets/images/auth/eye-hide.png";
 
 const Login = () => {
-    const [data, setData] = useState(initialState);
-    const navigate = useNavigate();
-    const {setCredentials} = useAuth();
+    const { email, setEmail, password, setPassword, handleSubmit, error, loading } = useLogin();
+    const [showPassword, setShowPassword] = useState(false);
 
-    const handleInputChange = ({ target: { name, value } }) => {
-        setData((prev) => ({ ...prev, [name]: value }));
+    const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
     };
 
-    const handleLogin = async (event) => {
-        event.preventDefault();
-        try {
-            const params = new URLSearchParams();
-            params.append('email', data.email);
-            params.append('password', data.password);
-            params.append('dev_mode', initialState.dev_mode);
-
-            const response = await axios.post(
-                'https://api.qa.vitawallet.io/api/auth/sign_in',
-                params,  // <--- Enviamos el cuerpo como URLSearchParams
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'app-name': 'ANGIE',
-                        'Accept': '*/*',
-                        'Cache-Control': 'no-cache'
-                    }
-                }
-            );
-
-            const headers = response.headers;
-
-            const accessToken = headers['access-token'];
-            const client = headers['client'];
-            const uid = headers['uid'];
-
-            // Guardar en estado global
-            setCredentials({ accessToken, client, uid });
-
-            // Guardar en localStorage
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('client', client);
-            localStorage.setItem('uid', uid);
-
-            navigate('/inicio', { replace: true });
-
-        } catch (error) {
-            console.error('Error en el login:', error);
-        }
+    const isValidEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
+
+    const isFormValid = isValidEmail(email) && password.length >= 8;
 
     return (
-        <div className="container">
-            <h1 className="text-center">Iniciar sesión</h1>
-            <form className="w-50 mx-auto" onSubmit={handleLogin}>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Correo electrónico</label>
-                    <input type="email" className="form-control" name="email" id="email" value={data.email} onChange={handleInputChange} aria-describedby="email" placeholder="juan@gmail.com"/>
+        <div className="login container-fluid">
+            <div className="row f-family-open-sans-regular">
+                <div className="left col-12 col-md-5 col-xl-6">
+                    <form className="login__form m-auto" onSubmit={handleSubmit}>
+                        <h1 className="form__title text-start fs-3 fw-bold">Iniciar sesión</h1>
+                        <div className="form__inputs mb-4">
+                            <label htmlFor="email" className="form-label mb-1 fs-6">Correo electrónico</label>
+                            <input
+                                name="email"
+                                id="email"
+                                type="email"
+                                className={`input__item form-control py-2 ${isValidEmail(email) ? "is-valid" : ""}`}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="juan@gmail.com"
+                            />
+                        </div>
+                        <div className="form__inputs mb-4">
+                            <label htmlFor="password" className="form-label mb-1 fs-6">Contraseña</label>
+                            <div className="position-relative">
+                                <input
+                                    name="password"
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    className="input__item form-control py-2"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="Escribe tu contraseña"
+                                />
+                                <img 
+                                    src={showPassword ? eyeHide : eyeShow} 
+                                    alt="toggle password visibility" 
+                                    className="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                    style={{ width: "20px", cursor: "pointer" }}
+                                    onClick={togglePasswordVisibility}
+                                />
+                            </div>
+                            <p className="text-end my-2"><a href="#" className="text-dark">¿Olvidaste tu contraseña?</a></p>
+                        </div>
+                        <button
+                            type="submit"
+                            className="form__submit btn btn-primary text-white w-100 py-2"
+                            disabled={!isFormValid}
+                            style={{
+                                background: isFormValid ? "linear-gradient(90deg, #05BCB9, #167287)" : "#B9C1C2",
+                            }}
+                        >
+                            {loading ?
+                                <div className="spinner spinner-border" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                                :
+                                "Iniciar sesión"
+                            }
+                        </button>
+                        {error && <p className="position-relative text-center text-danger my-2">{error}</p>}
+                    </form>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Contraseña</label>
-                    <input type="password" className="form-control" name="password" id="password" value={data.password} onChange={handleInputChange} placeholder="Escribe tu contraseña"/>
+                <div className="right col-12 col-md-7 col-xl-6 position-relative d-flex justify-content-center">
+                    <div className="image-container position-absolute d-flex justify-content-center py-5">
+                        <img src={amico} alt="amico-img" />
+                    </div>
                 </div>
-
-                <button type="submit" className="btn btn-primary text-white">
-                    Iniciar sesión
-                </button>
-            </form>
+            </div>
         </div>
     );
 };
