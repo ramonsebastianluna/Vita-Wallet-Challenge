@@ -4,20 +4,11 @@ import { useAuth } from "../context/AuthContext";
 const MainLayout = ({children}) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { setCredentials } = useAuth();
+    const { logout } = useAuth();
 
     const handleLogout = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem("client");
-        localStorage.removeItem("uid");
-    
-        setCredentials({
-            accessToken: '',
-            client: '',
-            uid: ''
-        });
-    
-        navigate('/', { replace: true });
+        logout();
+        navigate("/");
     };
 
     const menuItems = [
