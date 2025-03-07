@@ -10,11 +10,13 @@ const validateHeaders = () => {
 };
 
 const ProtectedRoute = ({ children }) => {
-    const { credentials } = useAuth();
+    const { credentials, loading } = useAuth();
     const isAuthInContext = credentials.accessToken && credentials.client && credentials.uid;
     const isAuthInLocalStorage = validateHeaders();
 
     const isAuthenticated = isAuthInContext || isAuthInLocalStorage;
+
+    if (loading) return null;
 
     return isAuthenticated ? children : <Navigate to="/no-autenticado" />;
 };
